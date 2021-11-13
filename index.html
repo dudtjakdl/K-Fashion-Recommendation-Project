@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>패션왕</title>
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/lumen/bootstrap.min.css"
+    />
+    <style>
+      body {
+        background-color: #efefef;
+      }
+      .container {
+        background-color: white;
+        width: 800px;
+        padding: 10px;
+      }
+      p {
+        margin: 0px 0px;
+        text-align: center;
+      }
+      h1 {
+        text-align: center;
+        line-height: length;
+      }
+      h5 {
+        text-align: center;
+      }
+
+      .content {
+        text-align: center;
+      }
+      .card-header {
+        text-align: center;
+      }
+      .row {
+        margin: 20px 0px;
+      }
+      .card-body {
+        background-color: #d3d3d3;
+      }
+      progress {
+        vertical-align: baseline;
+      }
+      .progress {
+  display: -ms-flexbox;
+  display: flex;
+  height: 1.5rem;
+  overflow: hidden;
+  font-size: 0.75rem;
+  background-color: #edf3fc;
+  border-radius: 50rem;
+  box-shadow: inset 2px 2px 8px rgba(55, 94, 148, 0.3), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
+}
+
+.progress-bar {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #378dfc;
+  transition: width 0.6s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar {
+    transition: none;
+  }
+}
+
+.progress {
+  box-shadow: inset 2px 4px 6px rgba(109, 114, 121, 0.2), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
+}
+
+.progress-bar {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar:first-child {
+  border-top-left-radius: 50rem;
+  border-bottom-left-radius: 50rem;
+}
+
+.progress-bar:last-child {
+  border-top-right-radius: 50rem;
+  border-bottom-right-radius: 50rem;
+}
+
+      #office {
+        background-color: #a08888;
+        color: #a08888;
+      }
+
+      #vacation {
+        background-color: #95c24b;
+        color: #95c24b;
+      }
+
+      #casual {
+        background-color: #f5df10;
+        color: #f5df10;
+      }
+      .result{
+        display: flex;
+        margin: auto;
+        width: 80%;
+      }
+      .result_bar {
+        width: 70%;
+        margin: 10px auto;
+        text-align: center;
+      }
+
+      .result_label {
+        text-align: center;
+        margin: 10px;
+        float: left;
+        width: 15%;
+      }
+
+      .result_percentage {
+        text-align: center;
+        margin: 10px;
+        float: right;
+        width: 15%;
+        color: #C4C4C4
+      }
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+     
+      <ul class="nav">
+        <li><a class="navbar-brand" onClick="window.location.reload()" style="cursor: pointer;">
+        <img src="./img/KakaoTalk_20211113_151812090.png" width="30" height="30" alt="">
+        </a></li>
+        <li>
+          <h1>패션 스타일 분석</h1>
+      </ul>
+      
+    </nav>
+    <div class="container">
+      <div id="basic phrase">
+        <h2 style="text-align: center;">
+          <img src="img/toppng.com-appareil-photo-icon-camera-icon-small-1589x1271.png" width="30" height="30" id="camera"> 
+          <b>어떤 패션인지 분석해드려요</b>
+        </h2>
+        <p style="color:red;">
+          <b>★ 정면으로 찍었을때 성능이 더 좋아요 ★ </b>
+        </p>
+        <!-- 이미지 삽입 div -->
+        <div class="image-container">
+          <img style="width: 500px; display: block; margin: 0px auto;" id="preview-image" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
+          <br>
+          <input style="display: block;" type="file" id="input-image">
+        </div>
+        
+        <div>
+          <br> <br> <br>
+          <h3 style="text-align: center;">
+            <b>패션왕 분석이란?</b>
+          </h3>
+          <p style="text-align: center;">
+            사용자가 업로드한 패션 스타일을 분석하고 비슷한 패션을 추천해 드리는 서비스입니다.
+          </p>
+          <br><br>
+        </div>
+        <script>
+          function readImage(input) {
+
+          // 인풋 태그에 파일이 있는 경우
+          if(input.files && input.files[0]) {
+
+              // 이미지 파일인지 검사 (생략)
+
+              // FileReader 인스턴스 생성
+              const reader = new FileReader()
+
+           // 이미지가 로드가 된 경우
+              reader.onload = e => {
+               const previewImage = document.getElementById("preview-image")
+               previewImage.src = e.target.result
+           }
+
+              // reader가 이미지 읽도록 하기
+          reader.readAsDataURL(input.files[0])
+          }
+      }
+
+      // input file에 change 이벤트 부여
+      const inputImage = document.getElementById("input-image")
+      inputImage.addEventListener("change", e => {
+          readImage(e.target)
+      })
+      </script>
+
+      </div>
+      <div class="image-container">
+        <img src="./img/오피스룩예시.png" style="width: 300px; height : 400px; display: block; margin: 0px auto;" >
+        <br><br>
+        <h3 style="text-align: center; color : #A08888"><b>오피스룩 스타일</b></h3>
+        <br><br>
+        <h3 style="text-align: center; color : #A08888" >74%</h3>
+        <br>
+        <p style="text-align: center;">
+          직장인들이 선호하는 깔끔하고 편안하면서 세련된 스타일 입니다.
+        </p>
+        <br><br>
+      </div>
+      <div class="result_contatiner">
+        <div class="result">
+          <div class="result_label" id="office" style="background-color: white;">오피스</div>
+          <div class="result_bar">
+            <div class="progress">
+              <div class="progress-bar" id="office" role="progressbar" style="width: 74%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="result_percentage" id="office" style="background-color: white;">74%</div>
+        </div>
+        <div class="result">
+          <div class="result_label" id="vacation" style="background-color: white;">바캉스</div>
+          <div class="result_bar">
+            <div class="progress">
+              <div class="progress-bar" id="vacation" role="progressbar" style="width: 9%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="result_percentage">9%</div>
+        </div>
+        <div class="result">
+          <div class="result_label" id="casual" style="background-color: white;">캐주얼</div>
+          <div class="result_bar">
+            <div class="progress">
+              <div class="progress-bar" id="casual" role="progressbar" style="width: 5%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="result_percentage">5%</div>
+        </div>
+      </div>
+      <div class="style_recommendation">
+          <h1>오피스룩 스타일 추천</h1>
+          <p>바로가기 클릭시 해당 상품 사이트로 이동</p>
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">오피스룩</div>
+                <img src="./img/71363c3609d5fddc91ecb7bec5e4bdb6.jpg" alt="" />
+                <div class="card-body">
+                  <h5 class="card-title">사이드 버튼 오버핏 셔츠 MIWYWBT02B</h5>
+                  <p class="card-text">
+                    가격 : 0000
+                    <br />
+                    쇼핑몰 : 미쏘
+                    <br />
+                    카테고리 : 0000
+                  </p>
+                  <article class="content">
+                    <a
+                      href="https://mixxo.com/product/%EC%82%AC%EC%9D%B4%EB%93%9C-%EB%B2%84%ED%8A%BC-%EC%98%A4%EB%B2%84%ED%95%8F-%EC%85%94%EC%B8%A0-miwywbt02b/2413/category/59/display/1/"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">오피스룩</div>
+                <img src="./img/aef4793701117bec36cacedda77e6256.jpg" alt="" />
+                <div class="card-body">
+                  <h5 class="card-title">베이직 셔츠 블라우스 MIWBLBT10B</h5>
+                  <p class="card-text">
+                    가격 : 0000
+                    <br />
+                    쇼핑몰 : 미쏘
+                    <br />
+                    카테고리 : 0000
+                  </p>
+                  <article class="content">
+                    <a
+                      href="https://mixxo.com/product/%EB%B2%A0%EC%9D%B4%EC%A7%81-%EC%85%94%EC%B8%A0-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt10b/2223/category/58/display/1/"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">오피스룩</div>
+                <img src="./img/624434547d4f91098747ebe6266daa6e.jpg" alt="" />
+                <div class="card-body">
+                  <h5 class="card-title">셔츠형 변형 블라우스 MIWBLBT10A</h5>
+                  <p class="card-text">
+                    가격 : 0000
+                    <br />
+                    쇼핑몰 : 미쏘
+                    <br />
+                    카테고리 : 0000
+                  </p>
+                  <article class="content">
+                    <a
+                      href="https://mixxo.com/product/%EC%85%94%EC%B8%A0%ED%98%95-%EB%B3%80%ED%98%95-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt10a/2222/category/58/display/1/"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">오피스룩</div>
+                <img src="./img/fb522fa48ec0f389a17802ddcbe4bb00.jpg" alt="" />
+                <div class="card-body">
+                  <h5 class="card-title">벌룬소매 타이 블라우스 MIWBLBT23B</h5>
+                  <p class="card-text">
+                    가격 : 0000
+                    <br />
+                    쇼핑몰 : 미쏘
+                    <br />
+                    카테고리 : 0000
+                  </p>
+                  <article class="content">
+                    <a
+                      href="https://mixxo.com/product/%EB%B2%8C%EB%A3%AC%EC%86%8C%EB%A7%A4-%ED%83%80%EC%9D%B4-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt23b/2498/category/58/display/1/"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">오피스룩</div>
+                <img src="./img/9a1d1bd3d45882068d04ae9a9ba2d357.jpg" alt="" />
+                <div class="card-body">
+                  <h5 class="card-title">
+                    셔츠카라 반오픈 블라우스 MIWBLBT21B
+                  </h5>
+                  <p class="card-text">
+                    가격 : 0000
+                    <br />
+                    쇼핑몰 : 미쏘
+                    <br />
+                    카테고리 : 0000
+                  </p>
+                  <article class="content">
+                    <a
+                      href="https://mixxo.com/product/%EC%85%94%EC%B8%A0%EC%B9%B4%EB%9D%BC-%EB%B0%98%EC%98%A4%ED%94%88-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt21b/2400/category/58/display/1/"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">오피스룩</div>
+                <img src="./img/d215c401e1ae6fbeafbe1d73e0e3fe27.jpg" alt="" />
+                <div class="card-body">
+                  <h5 class="card-title">라운드넥 핀턱 블라우스_MIWBLB930B</h5>
+                  <p class="card-text">
+                    가격 : 0000
+                    <br />
+                    쇼핑몰 : 미쏘
+                    <br />
+                    카테고리 : 0000
+                  </p>
+                  <article class="content">
+                    <a
+                      href="https://mixxo.com/product/%EB%9D%BC%EC%9A%B4%EB%93%9C%EB%84%A5-%ED%95%80%ED%84%B1-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4miwblb930b/1974/category/58/display/1/"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    </div>
+  </body>
+</html>
