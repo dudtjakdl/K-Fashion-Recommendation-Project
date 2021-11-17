@@ -4,31 +4,43 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>패션왕</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link
       rel="stylesheet"
       href="https://bootswatch.com/5/lumen/bootstrap.min.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    
     <style>
       body {
         background-color: #efefef;
+        font-family: 'Noto Sans KR', sans-serif;;
       }
       .container {
         background-color: white;
-        width: 800px;
+        margin: auto;
+        width: 50%;
         padding: 10px;
       }
       p {
         margin: 0px 0px;
         text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;;
       }
       h1 {
         text-align: center;
         line-height: length;
+        font-family: 'Noto Sans KR', sans-serif;;
       }
       h5 {
         text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;;
       }
-
+      
       .content {
         text-align: center;
       }
@@ -45,53 +57,53 @@
         vertical-align: baseline;
       }
       .progress {
-  display: -ms-flexbox;
-  display: flex;
-  height: 1.5rem;
-  overflow: hidden;
-  font-size: 0.75rem;
-  background-color: #edf3fc;
-  border-radius: 50rem;
-  box-shadow: inset 2px 2px 8px rgba(55, 94, 148, 0.3), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
+        display: -ms-flexbox;
+        display: flex;
+        height: 1.5rem;
+        overflow: hidden;
+        font-size: 0.75rem;
+        background-color: #edf3fc;
+        border-radius: 50rem;
+        box-shadow: inset 2px 2px 8px rgba(55, 94, 148, 0.3), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
 }
 
-.progress-bar {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -ms-flex-pack: center;
-  justify-content: center;
-  overflow: hidden;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  background-color: #378dfc;
-  transition: width 0.6s ease;
+      .progress-bar {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -ms-flex-pack: center;
+        justify-content: center;
+        overflow: hidden;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        background-color: #378dfc;
+        transition: width 0.6s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar {
-    transition: none;
-  }
-}
+      @media (prefers-reduced-motion: reduce) {
+        .progress-bar {
+          transition: none;
+        }
+      }
 
-.progress {
-  box-shadow: inset 2px 4px 6px rgba(109, 114, 121, 0.2), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
-}
+      .progress {
+        box-shadow: inset 2px 4px 6px rgba(109, 114, 121, 0.2), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
+      }     
 
-.progress-bar {
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-}
+      .progress-bar {
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
 
-.progress-bar:first-child {
-  border-top-left-radius: 50rem;
-  border-bottom-left-radius: 50rem;
-}
+      .progress-bar:first-child {
+        border-top-left-radius: 50rem;
+        border-bottom-left-radius: 50rem;
+      }
 
-.progress-bar:last-child {
-  border-top-right-radius: 50rem;
-  border-bottom-right-radius: 50rem;
+      .progress-bar:last-child {
+        border-top-right-radius: 50rem;
+        border-bottom-right-radius: 50rem;
 }
 
       #office {
@@ -136,29 +148,62 @@
     </style>
   </head>
   <body>
-    
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-     
-      <ul class="nav">
-        <li><a class="navbar-brand" onClick="window.location.reload()" style="cursor: pointer;">
-        <img src="./img/KakaoTalk_20211113_151812090.png" width="30" height="30" alt="">
-        </a></li>
-        <li>
-          <h1>패션 스타일 분석</h1>
-      </ul>
-      
+      <div style="margin: auto; width: 50%; float: center" class="container-fluid">
+        <div style="margin: auto; width: 20%; float: left">
+          <a class="navbar-brand" onClick="window.location.reload()" style="cursor: pointer;" href="#">
+            <img src="./img/home.png" width="25" height="25" alt="">
+            Home
+          </a>
+        </div>
+        <div style="margin: auto; width: 60%; float: center">
+          <p style="margin: 5px" text-align="center">
+            <span style="color:white;font-size:1.8rem;font-weight:bold;font-family: 'Noto Sans KR', sans-serif;">
+              패션 스타일 분석
+            </span>
+          </p>
+        </div>
+        <div style="color:#ffffff;font-size:0.9rem;margin: auto; width: 20%; float: right; font-family: 'Noto Sans KR', sans-serif;">
+          <p text-align="center">Kwangwoon Univ.<br>Chambit Design Project
+          </p>
+        </div>
     </nav>
+
     <div class="container">
+      
       <div id="basic phrase">
-        <h2 style="text-align: center;">
+        <div style="margin: auto; width: 640px; height: 426px;" id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="./img/carousel1.jpg" class="d-block w-100" alt="carousel1">
+            </div>
+            <div class="carousel-item">
+              <img src="./img/carousel2.jpg" class="d-block w-100" alt="carousel2">
+            </div>
+            <div class="carousel-item">
+              <img src="./img/carousel3.jpg" class="d-block w-100" alt="carousel3">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <h4 style="text-align: center; padding: 20px">
           <img src="img/toppng.com-appareil-photo-icon-camera-icon-small-1589x1271.png" width="30" height="30" id="camera"> 
-          <b>어떤 패션인지 분석해드려요</b>
+          <b>어떤 스타일인지 분석해드려요</b>
         </h2>
-        <p style="color:red;">
-          <b>★ 정면으로 찍었을때 성능이 더 좋아요 ★ </b>
+        <p>상하의가 포함된 패션 사진을 업로드 해주세요</p>
+        <p style="color:rgb(231, 71, 71);">
+          <b>정면으로 찍었을때 성능이 더 좋아요</b>
         </p>
         <!-- 이미지 삽입 div -->
-        <div class="image-container">
+        
+        <div class="image-upload">
           <img style="width: 500px; display: block; margin: 0px auto;" id="preview-image" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
           <br>
           <input style="display: block;" type="file" id="input-image">
