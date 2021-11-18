@@ -216,6 +216,7 @@ label {
     </style>
   </head>
   <body>
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div style="margin: auto; width: 50%; float: center" class="container-fluid">
         <div style="margin: auto; width: 20%; float: left">
@@ -286,38 +287,13 @@ label {
               <p>FILE NAME: </p>
               <p id="fileName"></p>
             </div>
-            <div class="buttonContainer">
-              <div class="submitButton" id="submitButton">분석하기</div>
+            <script src="js/ChangeFashionInfo.js"></script>
+            <div class="buttonContainer" onclick="changeFashionInfo()">
+              <div class="submitButton" id="submitButton" >분석하기</div>
             </div>
           <script src="/js/image_upload.js"></script>
-          <script>
-            function readImage(input) {
-  
-            // 인풋 태그에 파일이 있는 경우
-            if(input.files && input.files[0]) {
-  
-                // 이미지 파일인지 검사 (생략)
-  
-                // FileReader 인스턴스 생성
-                const reader = new FileReader()
-  
-             // 이미지가 로드가 된 경우
-                reader.onload = e => {
-                 const previewImage = document.getElementById("chooseFile")
-                 previewImage.src = e.target.result
-             }
-  
-                // reader가 이미지 읽도록 하기
-            reader.readAsDataURL(input.files[0])
-            }
-        }
-  
-        // input file에 change 이벤트 부여
-        const inputImage = document.getElementById("input-image")
-        inputImage.addEventListener("change", e => {
-            readImage(e.target)
-        })
-        </script>
+          
+
         </div>
         
         <div style="margin: 20px auto; width: 700px">
@@ -334,11 +310,18 @@ label {
 
           </p>
           <br><br>
+          
         </div>
 
 
       </div>
-      <div class="image-container">
+      <div id="loading" style="display:none">
+        <img src=./img/loading.gif style="margin-left: auto; margin-right: auto; display: block;"/>
+        <p>분성중입니다.</p>
+      </div>
+      
+      <div id = "analysis" style="display: none;">
+        <div class="image-container">
         <img src="./img/오피스룩예시.png" style="width: 300px; height : 400px; display: block; margin: 0px auto;" >
         <br><br>
         <h3 style="text-align: center; color : #A08888"><b>오피스룩 스타일</b></h3>
@@ -349,8 +332,10 @@ label {
           직장인들이 선호하는 깔끔하고 편안하면서 세련된 스타일 입니다.
         </p>
         <br><br>
-      </div>
-      <div class="result_contatiner">
+        </div>
+
+
+        <div class="result_contatiner">
         <div class="result">
           <div class="result_label" id="office" style="background-color: white;">오피스</div>
           <div class="result_bar">
@@ -378,8 +363,8 @@ label {
           </div>
           <div class="result_percentage">5%</div>
         </div>
-      </div>
-      <div class="style_recommendation">
+        </div>
+        <div class="style_recommendation">
           <h1>오피스룩 스타일 추천</h1>
           <p>바로가기 클릭시 해당 상품 사이트로 이동</p>
           <div class="row">
@@ -531,6 +516,7 @@ label {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
 
