@@ -145,6 +145,74 @@
         width: 15%;
         color: #C4C4C4
       }
+      .image-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    cursor: pointer;
+    font-size: 1.5em;
+    
+}
+
+#chooseFile {
+    visibility: hidden;
+}
+
+.fileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileInput {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 2px black;
+    width: 60%;
+    height: 30px;
+}
+
+#fileName {
+    margin-left: 5px;
+}
+
+.buttonContainer {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 0.8em;
+
+    cursor: pointer;
+}
+
+.image-show {
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.img {
+    position: absolute;
+}
     </style>
   </head>
   <body>
@@ -194,59 +262,80 @@
           </button>
         </div>
         <h4 style="text-align: center; padding: 20px">
-          <img src="img/toppng.com-appareil-photo-icon-camera-icon-small-1589x1271.png" width="30" height="30" id="camera"> 
-          <b>어떤 스타일인지 분석해드려요</b>
+          <b>어떤 스타일인지 분석해드려요👗👖</b>
         </h2>
         <p>상하의가 포함된 패션 사진을 업로드 해주세요</p>
         <p style="color:rgb(231, 71, 71);">
-          <b>정면으로 찍었을때 성능이 더 좋아요</b>
+          <b>👉 정면으로 찍었을때 성능이 더 좋아요 👈</b>
         </p>
         <!-- 이미지 삽입 div -->
         
         <div class="image-upload">
-          <img style="width: 500px; display: block; margin: 0px auto;" id="preview-image" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
+          <img style="width: 500px; display: block; margin: 50px auto;" id="preview-image" src="./img/preview.png">
           <br>
-          <input style="display: block;" type="file" id="input-image">
+          <form method="post" enctype="multipart/form-data">
+            <div class="button">
+                <label for="chooseFile">
+                  📷IMAGE UPLOAD📷
+                </label>
+            </div>
+            <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+          </form>
+          <div class="fileContainer">
+            <div class="fileInput">
+              <p>FILE NAME: </p>
+              <p id="fileName"></p>
+            </div>
+            <div class="buttonContainer">
+              <div class="submitButton" id="submitButton">분석하기</div>
+            </div>
+          <script src="/js/image_upload.js"></script>
+          <script>
+            function readImage(input) {
+  
+            // 인풋 태그에 파일이 있는 경우
+            if(input.files && input.files[0]) {
+  
+                // 이미지 파일인지 검사 (생략)
+  
+                // FileReader 인스턴스 생성
+                const reader = new FileReader()
+  
+             // 이미지가 로드가 된 경우
+                reader.onload = e => {
+                 const previewImage = document.getElementById("chooseFile")
+                 previewImage.src = e.target.result
+             }
+  
+                // reader가 이미지 읽도록 하기
+            reader.readAsDataURL(input.files[0])
+            }
+        }
+  
+        // input file에 change 이벤트 부여
+        const inputImage = document.getElementById("input-image")
+        inputImage.addEventListener("change", e => {
+            readImage(e.target)
+        })
+        </script>
         </div>
         
-        <div>
+        <div style="margin: 20px auto; width: 700px">
           <br> <br> <br>
-          <h3 style="text-align: center;">
-            <b>패션왕 분석이란?</b>
+          <h5 style="text-align: center; color:#acacac">
+            <b>어떻게 동작하는 것인가요?🤔</b>
           </h3>
-          <p style="text-align: center;">
-            사용자가 업로드한 패션 스타일을 분석하고 비슷한 패션을 추천해 드리는 서비스입니다.
+          <p style="text-align:justify;color: #cacaca;font-family: 'Nanum Gothic', sans-serif;">
+            사용자가 업로드한 이미지를 이미 학습된 딥러닝 모델이 여러 스타일 label들과의 연관성을 계산하여
+            제일 비슷한 스타일로 분류합니다. 모델에 넣기전 sementic segmentation 기술을 적용하여 사람 부분만
+            이미지를 크롭하는 것이 중요하며, 스타일을 분류할 때 가중치를 확인하여 여러 label들과의 연관성을
+            퍼센트(%)로 나타내는 것이 특징입니다.
+            
+
           </p>
           <br><br>
         </div>
-        <script>
-          function readImage(input) {
 
-          // 인풋 태그에 파일이 있는 경우
-          if(input.files && input.files[0]) {
-
-              // 이미지 파일인지 검사 (생략)
-
-              // FileReader 인스턴스 생성
-              const reader = new FileReader()
-
-           // 이미지가 로드가 된 경우
-              reader.onload = e => {
-               const previewImage = document.getElementById("preview-image")
-               previewImage.src = e.target.result
-           }
-
-              // reader가 이미지 읽도록 하기
-          reader.readAsDataURL(input.files[0])
-          }
-      }
-
-      // input file에 change 이벤트 부여
-      const inputImage = document.getElementById("input-image")
-      inputImage.addEventListener("change", e => {
-          readImage(e.target)
-      })
-      </script>
 
       </div>
       <div class="image-container">
