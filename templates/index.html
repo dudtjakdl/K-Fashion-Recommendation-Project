@@ -1,10 +1,9 @@
-<!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>패션왕</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    
     <link
       rel="stylesheet"
       href="https://bootswatch.com/5/lumen/bootstrap.min.css"
@@ -13,8 +12,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/image_upload.js') }}"></script>
+  
+   
+
     <style>
       body {
         background-color: #efefef;
@@ -167,6 +175,8 @@ label {
     visibility: hidden;
 }
 
+
+
 .fileContainer {
     display: flex;
     justify-content: center;
@@ -216,12 +226,14 @@ label {
     </style>
   </head>
   <body>
-    
+
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div style="margin: auto; width: 50%; float: center" class="container-fluid">
         <div style="margin: auto; width: 20%; float: left">
           <a class="navbar-brand" onClick="window.location.reload()" style="cursor: pointer;" href="#">
-            <img src="./img/home.png" width="25" height="25" alt="">
+            <img  width="25" height="25" alt="" src="{{ url_for('static', filename='img/home.png') }}">
+        
             Home
           </a>
         </div>
@@ -240,89 +252,12 @@ label {
 
     <div class="container">
       
-      <div id="basic phrase">
-        <div style="margin: auto; width: 640px; height: 426px;" id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="./img/carousel1.jpg" class="d-block w-100" alt="carousel1">
-            </div>
-            <div class="carousel-item">
-              <img src="./img/carousel2.jpg" class="d-block w-100" alt="carousel2">
-            </div>
-            <div class="carousel-item">
-              <img src="./img/carousel3.jpg" class="d-block w-100" alt="carousel3">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
-        </div>
-        <h4 style="text-align: center; padding: 20px">
-          <b>어떤 스타일인지 분석해드려요👗👖</b>
-        </h2>
-        <p>상하의가 포함된 패션 사진을 업로드 해주세요</p>
-        <p style="color:rgb(231, 71, 71);">
-          <b>👉 정면으로 찍었을때 성능이 더 좋아요 👈</b>
-        </p>
-        <!-- 이미지 삽입 div -->
-        
-        <div class="image-upload">
-          <img style="width: 500px; display: block; margin: 50px auto;" id="preview-image" src="./img/preview.png">
-          <br>
-          <form method="post" enctype="multipart/form-data">
-            <div class="button">
-                <label for="chooseFile">
-                  📷IMAGE UPLOAD📷
-                </label>
-            </div>
-            <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
-          </form>
-          <div class="fileContainer">
-            <div class="fileInput">
-              <p>FILE NAME: </p>
-              <p id="fileName"></p>
-            </div>
-            <script src="js/ChangeFashionInfo.js"></script>
-            <div class="buttonContainer" onclick="changeFashionInfo()">
-              <div class="submitButton" id="submitButton" >분석하기</div>
-            </div>
-          <script src="/js/image_upload.js"></script>
-          
-
-        </div>
-        
-        <div style="margin: 20px auto; width: 700px">
-          <br> <br> <br>
-          <h5 style="text-align: center; color:#acacac">
-            <b>어떻게 동작하는 것인가요?🤔</b>
-          </h3>
-          <p style="text-align:justify;color: #cacaca;font-family: 'Nanum Gothic', sans-serif;">
-            사용자가 업로드한 이미지를 이미 학습된 딥러닝 모델이 여러 스타일 label들과의 연관성을 계산하여
-            제일 비슷한 스타일로 분류합니다. 모델에 넣기전 sementic segmentation 기술을 적용하여 사람 부분만
-            이미지를 크롭하는 것이 중요하며, 스타일을 분류할 때 가중치를 확인하여 여러 label들과의 연관성을
-            퍼센트(%)로 나타내는 것이 특징입니다.
-            
-
-          </p>
-          <br><br>
-          
-        </div>
-
-
-      </div>
-      <div id="loading" style="display:none">
-        <img src=./img/loading.gif style="margin-left: auto; margin-right: auto; display: block;"/>
-        <p>분성중입니다.</p>
-      </div>
-      
-      <div id = "analysis" style="display: none;">
+      <p>{{sim}}</p>
+      <p>{{jso}}</p>
+      <img style="width: 500px; display: block; margin: 50px auto;" id="insert-image" src="{{ url_for('static', filename=my_img) }}">
+      <div id = "analysis">
         <div class="image-container">
-        <img src="./img/오피스룩예시.png" style="width: 300px; height : 400px; display: block; margin: 0px auto;" >
+        
         <br><br>
         <h3 style="text-align: center; color : #A08888"><b>오피스룩 스타일</b></h3>
         <br><br>
@@ -371,7 +306,7 @@ label {
             <div class="col-4">
               <div class="card">
                 <div class="card-header">오피스룩</div>
-                <img src="./img/71363c3609d5fddc91ecb7bec5e4bdb6.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/71363c3609d5fddc91ecb7bec5e4bdb6.jpg') }}"/>
                 <div class="card-body">
                   <h5 class="card-title">사이드 버튼 오버핏 셔츠 MIWYWBT02B</h5>
                   <p class="card-text">
@@ -395,7 +330,7 @@ label {
             <div class="col-4">
               <div class="card">
                 <div class="card-header">오피스룩</div>
-                <img src="./img/aef4793701117bec36cacedda77e6256.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/aef4793701117bec36cacedda77e6256.jpg') }}"/>
                 <div class="card-body">
                   <h5 class="card-title">베이직 셔츠 블라우스 MIWBLBT10B</h5>
                   <p class="card-text">
@@ -419,7 +354,8 @@ label {
             <div class="col-4">
               <div class="card">
                 <div class="card-header">오피스룩</div>
-                <img src="./img/624434547d4f91098747ebe6266daa6e.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/624434547d4f91098747ebe6266daa6e.jpg') }}"/>
+  
                 <div class="card-body">
                   <h5 class="card-title">셔츠형 변형 블라우스 MIWBLBT10A</h5>
                   <p class="card-text">
@@ -444,7 +380,8 @@ label {
             <div class="col-4">
               <div class="card">
                 <div class="card-header">오피스룩</div>
-                <img src="./img/fb522fa48ec0f389a17802ddcbe4bb00.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/fb522fa48ec0f389a17802ddcbe4bb00.jpg') }}"/>
+
                 <div class="card-body">
                   <h5 class="card-title">벌룬소매 타이 블라우스 MIWBLBT23B</h5>
                   <p class="card-text">
@@ -468,7 +405,8 @@ label {
             <div class="col-4">
               <div class="card">
                 <div class="card-header">오피스룩</div>
-                <img src="./img/9a1d1bd3d45882068d04ae9a9ba2d357.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/9a1d1bd3d45882068d04ae9a9ba2d357.jpg') }}"/>
+
                 <div class="card-body">
                   <h5 class="card-title">
                     셔츠카라 반오픈 블라우스 MIWBLBT21B
@@ -494,7 +432,7 @@ label {
             <div class="col-4">
               <div class="card">
                 <div class="card-header">오피스룩</div>
-                <img src="./img/d215c401e1ae6fbeafbe1d73e0e3fe27.jpg" alt="" />
+                <img src="{{ url_for('static', filename='img/d215c401e1ae6fbeafbe1d73e0e3fe27.jpg') }}"/>
                 <div class="card-body">
                   <h5 class="card-title">라운드넥 핀턱 블라우스_MIWBLB930B</h5>
                   <p class="card-text">
@@ -514,15 +452,10 @@ label {
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
-      </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    </div>
-  </body>
+   </body>
 </html>
+
