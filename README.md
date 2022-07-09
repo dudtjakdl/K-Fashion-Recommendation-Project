@@ -79,9 +79,19 @@ K-Fashion image를 학습한 모델을 구현하고 모델을 통하여 사용�
 
 
 3. 실행 방법
-
-
+  - 깃허브 파일 다운로드
+  - [Install](https://drive.google.com/drive/folders/1-B7ECPEj1fe9wcHTtQVeTPn0tCv34LMN?usp=sharing)
+  - best_model_final.h5, image simillarity_1.h5 -> model 폴더에 추가
+  - class_array.zip 압축 해제 후 폴더 채로 상위(Root)폴더에 추가
+  - shop_img.zip 압축 해제 후 이미지 전체를 static/shop_img 경로에 추가
+  - run.py를 파이썬으로 실행
+  - http://127.0.0.1:5001/upload 접속
+  
 ## 시연 영상
+
+
+https://user-images.githubusercontent.com/38833676/178096021-959d819d-2206-4bb3-bfb3-23ba7f714789.mp4
+
 
 
 ## 참조
