@@ -1,9 +1,10 @@
+
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>패션왕</title>
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link
       rel="stylesheet"
       href="https://bootswatch.com/5/lumen/bootstrap.min.css"
@@ -12,15 +13,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-   
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/image_upload.js') }}"></script>
-  
+    <script>
+      function loading(){
+        $('#loading').show()
+      }
+    </script>
    
 
     <style>
@@ -128,6 +127,8 @@
         background-color: #f5df10;
         color: #f5df10;
       }
+
+
       .result{
         display: flex;
         margin: auto;
@@ -174,8 +175,6 @@ label {
 #chooseFile {
     visibility: hidden;
 }
-
-
 
 .fileContainer {
     display: flex;
@@ -250,212 +249,129 @@ label {
         </div>
     </nav>
 
-    <div class="container">
-      
-      <p>{{sim}}</p>
-      <p>{{jso}}</p>
-      <img style="width: 500px; display: block; margin: 50px auto;" id="insert-image" src="{{ url_for('static', filename=my_img) }}">
-      <div id = "analysis">
-        <div class="image-container">
-        
-        <br><br>
-        <h3 style="text-align: center; color : #A08888"><b>오피스룩 스타일</b></h3>
-        <br><br>
-        <h3 style="text-align: center; color : #A08888" >74%</h3>
-        <br>
-        <p style="text-align: center;">
-          직장인들이 선호하는 깔끔하고 편안하면서 세련된 스타일 입니다.
+    <div class="container"> 
+      <div id="basic phrase">
+        <div style="margin: auto; width: 68%;" id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img class="d-block w-100" alt="carousel1" src="{{ url_for('static', filename='img/carousel1.jpg') }}">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" alt="carousel2" src="{{ url_for('static', filename='img/carousel2.jpg') }}">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" alt="carousel3" src="{{ url_for('static', filename='img/carousel3.jpg') }}">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        <h4 style="text-align: center; padding: 20px">
+          <b>어떤 스타일인지 분석해드려요👗👖</b>
+        </h2>
+        <p>상하의가 포함된 패션 사진을 업로드 해주세요</p>
+        <p style="color:rgb(231, 71, 71);">
+          <b>👉 정면으로 찍었을때 성능이 더 좋아요 👈</b>
         </p>
-        <br><br>
+        <!-- 이미지 삽입 div -->
+        
+        <div class="image-upload">
+          <img style="width: 55%; display: block; margin: 50px auto;" id="preview-image" src="{{ url_for('static', filename='img/preview.png') }}">
+          <br>
+          <form action = "/result" method = "POST" enctype = "multipart/form-data">
+            
+            
+            <input style="display: block;" type="file" id="chooseFile" name="file" accept="image/*" onchange="loadFile(this)"/>
+            
+           
+            <div class="button">
+                <label for="chooseFile">
+                  📷IMAGE UPLOAD📷
+                </label>
+            </div>
+            <br><br>
+            <script>
+              function loadFile(input) {
+                var file = input.files[0];
+              
+                var name = document.getElementById("fileName");
+                name.textContent = file.name;
+              
+              }
+
+              function readImage(input) {
+                // 인풋 태그에 파일이 있는 경우
+                if(input.files && input.files[0]) {
+                    // 이미지 파일인지 검사 (생략)
+                    // FileReader 인스턴스 생성
+                    const reader = new FileReader()
+                    // 이미지가 로드가 된 경우
+                    reader.onload = e => {
+                        const previewImage = document.getElementById("preview-image")
+                        previewImage.src = e.target.result
+                    }
+                    // reader가 이미지 읽도록 하기
+                    reader.readAsDataURL(input.files[0])
+                }
+              }
+              // input file에 change 이벤트 부여
+              const inputImage = document.getElementById("chooseFile")
+              inputImage.addEventListener("change", e => {
+                readImage(e.target)
+              })</script>
+            
+           
+
+            <div class="fileContainer">
+              <div class="fileInput">
+                 <p>FILE NAME: </p>
+                 <p id="fileName"></p>
+              </div>
+              <script src="{{ url_for('static', filename='js/ChangeFashionInfo.js') }}"></script>
+                &nbsp;
+              <button id="submitButton" class="btn btn-dark" type="submit" onclick="loading()"> 
+                  <span>분석하기</span>
+              </button>
+            </div>
+                 
+                 
+          </form>
+          <br><br>     
+          
+        </div>
+        <div id=loading style="margin: 0px auto; display:none; text-align : center;">
+          <img id="loading_img" src="{{ url_for('static', filename='img/loading.gif') }}" style="margin: 0px auto;"/>
+          <h5 id="loading_p">~ 분석중 ~<br>잠시만 기다려주세요</h5>
+        </div>
+        
+        <div style="margin: 20px auto; width: 77%">
+          <br> <br> <br>
+          <h5 style="text-align: center; color:#acacac">
+            <b>어떻게 동작하는 것인가요?🤔</b>
+          </h5>
+          <p style="text-align:justify;color: #cacaca;font-family: 'Nanum Gothic', sans-serif;">
+            사용자가 업로드한 이미지를 이미 학습된 딥러닝 모델이 여러 스타일 label들과의 연관성을 계산하여
+            제일 비슷한 스타일로 분류합니다. 모델에 넣기전 sementic segmentation 기술을 적용하여 사람 부분만
+            이미지를 크롭하는 것이 중요하며, 스타일을 분류할 때 가중치를 확인하여 여러 label들과의 연관성을
+            퍼센트(%)로 나타내는 것이 특징입니다.
+            
+
+          </p>
+          <br><br>
+          
         </div>
 
 
-        <div class="result_contatiner">
-        <div class="result">
-          <div class="result_label" id="office" style="background-color: white;">오피스</div>
-          <div class="result_bar">
-            <div class="progress">
-              <div class="progress-bar" id="office" role="progressbar" style="width: 74%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="result_percentage" id="office" style="background-color: white;">74%</div>
-        </div>
-        <div class="result">
-          <div class="result_label" id="vacation" style="background-color: white;">바캉스</div>
-          <div class="result_bar">
-            <div class="progress">
-              <div class="progress-bar" id="vacation" role="progressbar" style="width: 9%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="result_percentage">9%</div>
-        </div>
-        <div class="result">
-          <div class="result_label" id="casual" style="background-color: white;">캐주얼</div>
-          <div class="result_bar">
-            <div class="progress">
-              <div class="progress-bar" id="casual" role="progressbar" style="width: 5%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-          </div>
-          <div class="result_percentage">5%</div>
-        </div>
-        </div>
-        <div class="style_recommendation">
-          <h1>오피스룩 스타일 추천</h1>
-          <p>바로가기 클릭시 해당 상품 사이트로 이동</p>
-          <div class="row">
-            <div class="col-4">
-              <div class="card">
-                <div class="card-header">오피스룩</div>
-                <img src="{{ url_for('static', filename='img/71363c3609d5fddc91ecb7bec5e4bdb6.jpg') }}"/>
-                <div class="card-body">
-                  <h5 class="card-title">사이드 버튼 오버핏 셔츠 MIWYWBT02B</h5>
-                  <p class="card-text">
-                    가격 : 0000
-                    <br />
-                    쇼핑몰 : 미쏘
-                    <br />
-                    카테고리 : 0000
-                  </p>
-                  <article class="content">
-                    <a
-                      href="https://mixxo.com/product/%EC%82%AC%EC%9D%B4%EB%93%9C-%EB%B2%84%ED%8A%BC-%EC%98%A4%EB%B2%84%ED%95%8F-%EC%85%94%EC%B8%A0-miwywbt02b/2413/category/59/display/1/"
-                      class="btn btn-primary"
-                      >바로가기</a
-                    >
-                  </article>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-4">
-              <div class="card">
-                <div class="card-header">오피스룩</div>
-                <img src="{{ url_for('static', filename='img/aef4793701117bec36cacedda77e6256.jpg') }}"/>
-                <div class="card-body">
-                  <h5 class="card-title">베이직 셔츠 블라우스 MIWBLBT10B</h5>
-                  <p class="card-text">
-                    가격 : 0000
-                    <br />
-                    쇼핑몰 : 미쏘
-                    <br />
-                    카테고리 : 0000
-                  </p>
-                  <article class="content">
-                    <a
-                      href="https://mixxo.com/product/%EB%B2%A0%EC%9D%B4%EC%A7%81-%EC%85%94%EC%B8%A0-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt10b/2223/category/58/display/1/"
-                      class="btn btn-primary"
-                      >바로가기</a
-                    >
-                  </article>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-4">
-              <div class="card">
-                <div class="card-header">오피스룩</div>
-                <img src="{{ url_for('static', filename='img/624434547d4f91098747ebe6266daa6e.jpg') }}"/>
-  
-                <div class="card-body">
-                  <h5 class="card-title">셔츠형 변형 블라우스 MIWBLBT10A</h5>
-                  <p class="card-text">
-                    가격 : 0000
-                    <br />
-                    쇼핑몰 : 미쏘
-                    <br />
-                    카테고리 : 0000
-                  </p>
-                  <article class="content">
-                    <a
-                      href="https://mixxo.com/product/%EC%85%94%EC%B8%A0%ED%98%95-%EB%B3%80%ED%98%95-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt10a/2222/category/58/display/1/"
-                      class="btn btn-primary"
-                      >바로가기</a
-                    >
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <div class="card">
-                <div class="card-header">오피스룩</div>
-                <img src="{{ url_for('static', filename='img/fb522fa48ec0f389a17802ddcbe4bb00.jpg') }}"/>
-
-                <div class="card-body">
-                  <h5 class="card-title">벌룬소매 타이 블라우스 MIWBLBT23B</h5>
-                  <p class="card-text">
-                    가격 : 0000
-                    <br />
-                    쇼핑몰 : 미쏘
-                    <br />
-                    카테고리 : 0000
-                  </p>
-                  <article class="content">
-                    <a
-                      href="https://mixxo.com/product/%EB%B2%8C%EB%A3%AC%EC%86%8C%EB%A7%A4-%ED%83%80%EC%9D%B4-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt23b/2498/category/58/display/1/"
-                      class="btn btn-primary"
-                      >바로가기</a
-                    >
-                  </article>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-4">
-              <div class="card">
-                <div class="card-header">오피스룩</div>
-                <img src="{{ url_for('static', filename='img/9a1d1bd3d45882068d04ae9a9ba2d357.jpg') }}"/>
-
-                <div class="card-body">
-                  <h5 class="card-title">
-                    셔츠카라 반오픈 블라우스 MIWBLBT21B
-                  </h5>
-                  <p class="card-text">
-                    가격 : 0000
-                    <br />
-                    쇼핑몰 : 미쏘
-                    <br />
-                    카테고리 : 0000
-                  </p>
-                  <article class="content">
-                    <a
-                      href="https://mixxo.com/product/%EC%85%94%EC%B8%A0%EC%B9%B4%EB%9D%BC-%EB%B0%98%EC%98%A4%ED%94%88-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4-miwblbt21b/2400/category/58/display/1/"
-                      class="btn btn-primary"
-                      >바로가기</a
-                    >
-                  </article>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-4">
-              <div class="card">
-                <div class="card-header">오피스룩</div>
-                <img src="{{ url_for('static', filename='img/d215c401e1ae6fbeafbe1d73e0e3fe27.jpg') }}"/>
-                <div class="card-body">
-                  <h5 class="card-title">라운드넥 핀턱 블라우스_MIWBLB930B</h5>
-                  <p class="card-text">
-                    가격 : 0000
-                    <br />
-                    쇼핑몰 : 미쏘
-                    <br />
-                    카테고리 : 0000
-                  </p>
-                  <article class="content">
-                    <a
-                      href="https://mixxo.com/product/%EB%9D%BC%EC%9A%B4%EB%93%9C%EB%84%A5-%ED%95%80%ED%84%B1-%EB%B8%94%EB%9D%BC%EC%9A%B0%EC%8A%A4miwblb930b/1974/category/58/display/1/"
-                      class="btn btn-primary"
-                      >바로가기</a
-                    >
-                  </article>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
       </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    </div>
    </body>
 </html>
-

@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>패션왕</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/5/lumen/bootstrap.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    
+    <style>
+      body {
+        background-color: #efefef;
+        font-family: 'Noto Sans KR', sans-serif;;
+      }
+      .container {
+        background-color: white;
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+      }
+      p {
+        margin: 0px 0px;
+        text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;;
+      }
+      h1 {
+        text-align: center;
+        line-height: length;
+        font-family: 'Noto Sans KR', sans-serif;;
+      }
+      h5 {
+        text-align: center;
+        font-family: 'Noto Sans KR', sans-serif;;
+      }
+      
+      .content {
+        text-align: center;
+      }
+      .card-header {
+        text-align: center;
+      }
+      .row {
+        margin: 20px 0px;
+      }
+      .card-body {
+        background-color: #d3d3d3;
+      }
+      progress {
+        vertical-align: baseline;
+      }
+      .progress {
+        display: -ms-flexbox;
+        display: flex;
+        height: 1.5rem;
+        overflow: hidden;
+        font-size: 0.75rem;
+        background-color: #edf3fc;
+        border-radius: 50rem;
+        box-shadow: inset 2px 2px 8px rgba(55, 94, 148, 0.3), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
+}
+
+      .progress-bar {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -ms-flex-pack: center;
+        justify-content: center;
+        overflow: hidden;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        background-color: #378dfc;
+        transition: width 0.6s ease;
+}
+
+      @media (prefers-reduced-motion: reduce) {
+        .progress-bar {
+          transition: none;
+        }
+      }
+
+      .progress {
+        box-shadow: inset 2px 4px 6px rgba(109, 114, 121, 0.2), inset -3px -2px 5px rgba(255, 255, 255, 0.8);
+      }     
+
+      .progress-bar {
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .progress-bar:first-child {
+        border-top-left-radius: 50rem;
+        border-bottom-left-radius: 50rem;
+      }
+
+      .progress-bar:last-child {
+        border-top-right-radius: 50rem;
+        border-bottom-right-radius: 50rem;
+}
+
+      #office {
+        background-color: #a08888;
+        color: #a08888;
+      }
+
+      #vacation {
+        background-color: #95c24b;
+        color: #95c24b;
+      }
+
+      #casual {
+        background-color: #f5df10;
+        color: #f5df10;
+      }
+      .result{
+        display: flex;
+        margin: auto;
+        width: 80%;
+      }
+      .result_bar {
+        width: 70%;
+        margin: 10px auto;
+        text-align: center;
+      }
+
+      .result_label {
+        text-align: center;
+        margin: 10px;
+        float: left;
+        width: 15%;
+      }
+
+      .result_percentage {
+        text-align: center;
+        margin: 10px;
+        float: right;
+        width: 15%;
+        color: #C4C4C4
+      }
+      .image-upload {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    cursor: pointer;
+    font-size: 1.5em;
+    
+}
+
+#chooseFile {
+    visibility: hidden;
+}
+
+.fileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileInput {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 2px black;
+    width: 60%;
+    height: 30px;
+}
+
+#fileName {
+    margin-left: 5px;
+}
+
+.buttonContainer {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 0.8em;
+
+    cursor: pointer;
+}
+
+.image-show {
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.img {
+    position: absolute;
+}
+
+.recommendation_image {
+    height: 350px;
+}
+
+.card-body {
+    height: 200px;
+}
+
+.card-title{
+    height: 50px;
+}
+
+.content {
+    margin-top: 15px;
+}
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div style="margin: auto; width: 50%; float: center" class="container-fluid">
+        <div style="margin: auto; width: 20%; float: left">
+          <a class="navbar-brand" style="cursor: pointer;" href="/">
+            <img src="{{ url_for('static', filename='img/home.png') }}" width="25" height="25" alt="">
+            Home
+          </a>
+        </div>
+        <div style="margin: auto; width: 60%; float: center">
+          <p style="margin: 5px" text-align="center">
+            <span style="color:white;font-size:1.8rem;font-weight:bold;font-family: 'Noto Sans KR', sans-serif;">
+              패션 스타일 분석
+            </span>
+          </p>
+        </div>
+        <div style="color:#ffffff;font-size:0.9rem;margin: auto; width: 20%; float: right; font-family: 'Noto Sans KR', sans-serif;">
+          <p text-align="center">Kwangwoon Univ.<br>Chambit Design Project
+          </p>
+        </div>
+    </nav>
+
+    <div class="container">
+
+      <img style="width: 500px; display: block; margin: 50px auto;" id="insert-image" src="{{ url_for('static', filename=my_img) }}">
+      <div id = "analysis">
+        <div class="image-container">
+        
+        <br><br>
+        <h3 id="result_class" style="text-align: center; color : #A08888"><b>{{jso[0][0]}} 스타일</b></h3>
+        <br><br>
+        <h3 id="result_percentage" style="text-align: center; color : #A08888" >{{jso[0][1]}}%</h3>
+        <br>
+        <p id="caption" style="text-align: center;">
+          {{caption[jso[0][0]]}}
+        </p>
+        <br><br>
+        </div>
+
+
+        <div class="result_contatiner">
+        <div class="result">
+          <div class="result_label" id="1st_name" style="background-color: white;">{{jso[0][0]}}</div>
+          <div class="result_bar">
+            <div class="progress">
+              <div class="progress-bar" id="1st_bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="result_percentage" id="1st_percentage">{{jso[0][1]}}%</div>
+        </div>
+        <div class="result">
+          <div class="result_label" id="2nd_name" style="background-color: white;">{{jso[1][0]}}</div>
+          <div class="result_bar">
+            <div class="progress">
+              <div class="progress-bar" id="2nd_bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="result_percentage" id="2nd_percentage">{{jso[1][1]}}%</div>
+        </div>
+        <div class="result">
+          <div class="result_label" id="3rd_name" style="background-color: white;">{{jso[2][0]}}</div>
+          <div class="result_bar">
+            <div class="progress">
+              <div class="progress-bar" id="3rd_bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+          <div class="result_percentage" id="3rd_percentage">{{jso[2][1]}}%</div>
+        </div>
+        </div>
+        {% if jso[0][0] == '바캉스' %}
+          <script>
+            document.getElementById('result_class').style.color = "#95C24B"
+            document.getElementById('result_percentage').style.color = "#95C24B"
+            document.getElementById('1st_name').style.color = "#95C24B"
+            document.getElementById('1st_bar').style.color = "#95C24B"
+            document.getElementById('1st_bar').style.backgroundColor = "#95C24B"
+            document.getElementById('1st_percentage').style.color = "#95C24B"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '보헤미안' %}
+          <script>
+            document.getElementById('result_class').style.color = "#D37200"
+            document.getElementById('result_percentage').style.color = "#D37200"
+            document.getElementById('1st_name').style.color = "#D37200"
+            document.getElementById('1st_bar').style.color = "#D37200"
+            document.getElementById('1st_bar').style.backgroundColor = "#D37200"
+            document.getElementById('1st_percentage').style.color = "#D37200"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '섹시' %}
+          <script>
+            document.getElementById('result_class').style.color = "#FF0000"
+            document.getElementById('result_percentage').style.color = "#FF0000"
+            document.getElementById('1st_name').style.color = "#FF0000"
+            document.getElementById('1st_bar').style.color = "#FF0000"
+            document.getElementById('1st_bar').style.backgroundColor = "#FF0000"
+            document.getElementById('1st_percentage').style.color = "#FF0000"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '스포티' %}
+          <script>
+            document.getElementById('result_class').style.color = "#3CA7F4"
+            document.getElementById('result_percentage').style.color = "#3CA7F4"
+            document.getElementById('1st_name').style.color = "#3CA7F4"
+            document.getElementById('1st_bar').style.color = "#3CA7F4"
+            document.getElementById('1st_bar').style.backgroundColor = "#3CA7F4"
+            document.getElementById('1st_percentage').style.color = "#3CA7F4"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '오피스룩' %}
+          <script>
+            document.getElementById('result_class').style.color = "#A08888"
+            document.getElementById('result_percentage').style.color = "#A08888"
+            document.getElementById('1st_name').style.color = "#A08888"
+            document.getElementById('1st_bar').style.color = "#A08888"
+            document.getElementById('1st_bar').style.backgroundColor = "#A08888"
+            document.getElementById('1st_percentage').style.color = "#A08888"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '캐주얼' %}
+          <script>
+            document.getElementById('result_class').style.color = "#F5DF10"
+            document.getElementById('result_percentage').style.color = "#F5DF10"
+            document.getElementById('1st_name').style.color = "#F5DF10"
+            document.getElementById('1st_bar').style.color = "#F5DF10"
+            document.getElementById('1st_bar').style.backgroundColor = "#F5DF10"
+            document.getElementById('1st_percentage').style.color = "#F5DF10"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '트레디셔널' %}
+          <script>
+            document.getElementById('result_class').style.color = "#B566F2"
+            document.getElementById('result_percentage').style.color = "#B566F2"
+            document.getElementById('1st_name').style.color = "#B566F2"
+            document.getElementById('1st_bar').style.color = "#B566F2"
+            document.getElementById('1st_bar').style.backgroundColor = "#B566F2"
+            document.getElementById('1st_percentage').style.color = "#B566F2"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% elif jso[0][0] == '페미닌' %}
+          <script>
+            document.getElementById('result_class').style.color = "#DD3C9D"
+            document.getElementById('result_percentage').style.color = "#DD3C9D"
+            document.getElementById('1st_name').style.color = "#DD3C9D"
+            document.getElementById('1st_bar').style.color = "#DD3C9D"
+            document.getElementById('1st_bar').style.backgroundColor = "#DD3C9D"
+            document.getElementById('1st_percentage').style.color = "#DD3C9D"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% else %}
+          <script>
+            document.getElementById('result_class').style.color = "#000000"
+            document.getElementById('result_percentage').style.color = "#000000"
+            document.getElementById('1st_name').style.color = "#000000"
+            document.getElementById('1st_bar').style.color = "#000000"
+            document.getElementById('1st_bar').style.backgroundColor = "#000000"
+            document.getElementById('1st_percentage').style.color = "#000000"
+            document.getElementById('1st_bar').style.width = document.getElementById('1st_percentage').innerText
+          </script>
+        {% endif %}
+
+
+        {% if jso[1][0] == '바캉스' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#95C24B"
+            document.getElementById('2nd_bar').style.color = "#95C24B"
+            document.getElementById('2nd_bar').style.backgroundColor = "#95C24B"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '보헤미안' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#D37200"
+            document.getElementById('2nd_bar').style.color = "#D37200"
+            document.getElementById('2nd_bar').style.backgroundColor = "#D37200"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '섹시' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#FF0000"
+            document.getElementById('2nd_bar').style.color = "#FF0000"
+            document.getElementById('2nd_bar').style.backgroundColor = "#FF0000"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '스포티' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#3CA7F4"
+            document.getElementById('2nd_bar').style.color = "#3CA7F4"
+            document.getElementById('2nd_bar').style.backgroundColor = "#3CA7F4"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '오피스룩' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#A08888"
+            document.getElementById('2nd_bar').style.color = "#A08888"
+            document.getElementById('2nd_bar').style.backgroundColor = "#A08888"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '캐주얼' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#F5DF10"
+            document.getElementById('2nd_bar').style.color = "#F5DF10"
+            document.getElementById('2nd_bar').style.backgroundColor = "#F5DF10"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '트레디셔널' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#B566F2"
+            document.getElementById('2nd_bar').style.color = "#B566F2"
+            document.getElementById('2nd_bar').style.backgroundColor = "#B566F2"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% elif jso[1][0] == '페미닌' %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#DD3C9D"
+            document.getElementById('2nd_bar').style.color = "#DD3C9D"
+            document.getElementById('2nd_bar').style.backgroundColor = "#DD3C9D"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% else %}
+          <script>
+            document.getElementById('2nd_name').style.color = "#000000"
+            document.getElementById('2nd_bar').style.color = "#000000"
+            document.getElementById('2nd_bar').style.backgroundColor = "#000000"
+            document.getElementById('2nd_bar').style.width = document.getElementById('2nd_percentage').innerText
+          </script>
+        {% endif %}
+
+
+        {% if jso[2][0] == '바캉스' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#95C24B"
+            document.getElementById('3rd_bar').style.color = "#95C24B"
+            document.getElementById('3rd_bar').style.backgroundColor = "#95C24B"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '보헤미안' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#D37200"
+            document.getElementById('3rd_bar').style.color = "#D37200"
+            document.getElementById('3rd_bar').style.backgroundColor = "#D37200"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '섹시' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#FF0000"
+            document.getElementById('3rd_bar').style.color = "#FF0000"
+            document.getElementById('3rd_bar').style.backgroundColor = "#FF0000"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '스포티' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#3CA7F4"
+            document.getElementById('3rd_bar').style.color = "#3CA7F4"
+            document.getElementById('3rd_bar').style.backgroundColor = "#3CA7F4"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '오피스룩' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#A08888"
+            document.getElementById('3rd_bar').style.color = "#A08888"
+            document.getElementById('3rd_bar').style.backgroundColor = "#A08888"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '캐주얼' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#F5DF10"
+            document.getElementById('3rd_bar').style.color = "#F5DF10"
+            document.getElementById('3rd_bar').style.backgroundColor = "#F5DF10"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '트레디셔널' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#B566F2"
+            document.getElementById('3rd_bar').style.color = "#B566F2"
+            document.getElementById('3rd_bar').style.backgroundColor = "#B566F2"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% elif jso[2][0] == '페미닌' %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#DD3C9D"
+            document.getElementById('3rd_bar').style.color = "#DD3C9D"
+            document.getElementById('3rd_bar').style.backgroundColor = "#DD3C9D"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% else %}
+          <script>
+            document.getElementById('3rd_name').style.color = "#000000"
+            document.getElementById('3rd_bar').style.color = "#000000"
+            document.getElementById('3rd_bar').style.backgroundColor = "#000000"
+            document.getElementById('3rd_bar').style.width = document.getElementById('3rd_percentage').innerText
+          </script>
+        {% endif %}
+
+
+        <div class="style_recommendation" style="margin: 70px 10px;">
+          <h1 style="margin: 30px;">유사 스타일 추천</h1>
+          <p>바로가기 클릭시 해당 상품 사이트로 이동</p>
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">{{shop_name[0]}}</div>
+                <img class="recommendation_image" src="{{ url_for('static', filename=img_src[0]) }}"/>
+                <div class="card-body">
+                  <h5 class="card-title">{{item_name[0]}}</h5>
+                  <p class="card-text">
+                    가격 : {{price[0]}} 원
+                    <br />
+                    카테고리 : {{category[0]}}
+                  </p>
+                  <article class="content">
+                    <a
+                      href="{{ item_link[0] }}"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">{{shop_name[1]}}</div>
+                <img class="recommendation_image" src="{{ url_for('static', filename=img_src[1]) }}"/>
+                <div class="card-body">
+                  <h5 class="card-title">{{item_name[1]}}</h5>
+                  <p class="card-text">
+                    가격 : {{price[1]}} 원
+                    <br />
+                    카테고리 : {{category[1]}}
+                  </p>
+                  <article class="content">
+                    <a
+                      href="{{item_link[1]}}"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">{{shop_name[2]}}</div>
+                <img class="recommendation_image" src="{{ url_for('static', filename=img_src[2]) }}"/>
+  
+                <div class="card-body">
+                  <h5 class="card-title">{{item_name[2]}}</h5>
+                  <p class="card-text">
+                    가격 : {{price[2]}} 원
+                    <br />
+                    카테고리 : {{category[2]}}
+                  </p>
+                  <article class="content">
+                    <a
+                      href="{{item_link[2]}}"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">{{shop_name[3]}}</div>
+                <img class="recommendation_image" src="{{ url_for('static', filename=img_src[3]) }}"/>
+
+                <div class="card-body">
+                  <h5 class="card-title">{{item_name[3]}}</h5>
+                  <p class="card-text">
+                    가격 : {{price[3]}} 원
+                    <br />
+                    카테고리 : {{category[3]}}
+                  </p>
+                  <article class="content">
+                    <a
+                      href="{{item_link[3]}}"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">{{shop_name[4]}}</div>
+                <img class="recommendation_image" src="{{ url_for('static', filename=img_src[4]) }}"/>
+
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{item_name[4]}}
+                  </h5>
+                  <p class="card-text">
+                    가격 : {{price[4]}} 원
+                    <br />
+                    카테고리 : {{category[4]}}
+                  </p>
+                  <article class="content">
+                    <a
+                      href="{{item_link[4]}}"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-4">
+              <div class="card">
+                <div class="card-header">{{shop_name[5]}}</div>
+                <img class="recommendation_image" src="{{ url_for('static', filename=img_src[5]) }}"/>
+                <div class="card-body">
+                  <h5 class="card-title">{{item_name[5]}}</h5>
+                  <p class="card-text">
+                    가격 : {{price[5]}} 원
+                    <br />
+                    카테고리 : {{category[5]}}
+                  </p>
+                  <article class="content">
+                    <a
+                      href="{{item_link[5]}}"
+                      class="btn btn-primary"
+                      >바로가기</a
+                    >
+                  </article>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+   </body>
+</html>
+

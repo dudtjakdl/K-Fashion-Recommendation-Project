@@ -4,8 +4,10 @@ import tensorflow as tf
 from keras.applications.imagenet_utils import preprocess_input
 from keras.applications.xception import Xception
 from keras.models import Model, load_model, Sequential
+import pandas as pd
+import unicodedata
 
-
+data = pd.read_csv('static/data/쇼핑몰 데이터.csv')
 
 def img_load(img_path):#이미지 로드 및 어레이 변경
   image = keras.preprocessing.image.load_img(img_path, target_size=(256,128))
@@ -28,7 +30,7 @@ def run_model(input_segimg):
             self.model = simillarity_model
         def extract(self, img):
             # Resize the image
-            img = img.resize((299, 299))
+            img = img.resize((224, 224))
             # Convert the image color space
             img = img.convert('RGB')
             # Reformat the image
@@ -41,26 +43,65 @@ def run_model(input_segimg):
 
     fe=FeatureExtractor()
 
-
     if(result_class):
-        features=np.load("class_array/"+str(result_class)+"/all_p.npy")
-        paths=np.load("class_array/2/all_f.npy")
+        features=np.load("class_array/"+str(result_class)+"/all_f.npy")
+        paths=np.load("class_array/"+str(result_class)+"/all_p.npy")
     else:
         print("error")
-  
-    query = fe.extract(img)
+        features=np.load("class_array/"+str(result_class)+"/all_f.npy")
+        paths=np.load("class_array/"+str(result_class)+"/all_p.npy")
 
+    query = fe.extract(img)
     dists = np.linalg.norm(features - query, axis=1)
+
     ids = np.argsort(dists)[:6]
     scores = [(dists[id], paths[id], id) for id in ids]
-
-    global sim
-    sim=[]
+    sim = []
     for i in range(len(scores)):
         sim.append(scores[i][1])
+    sim = [s.replace('_crop' ,'') for s in sim]
+    
+    trans = result.round(2)*100
+    class_name = ['바캉스','보헤미안','섹시','스포티','오피스룩','캐주얼','트레디셔널','페미닌','힙합']
+    global result_json
+    result_json = dict(zip(class_name,trans[0]))
+    percentage_int = list(map(int, result_json.values()))
+    result_json = dict(zip(class_name, percentage_int))
+    result_json = sorted(result_json.items(), key=lambda x : x[1], reverse=True)
+
+    file_name = [s.split('/')[-1] for s in sim]
+    file_name = [unicodedata.normalize('NFC', s) for s in file_name]
+    for i in range(len(file_name)):
+      file_name[i] = file_name[i].replace('_crop', '')
+      file_name[i] = file_name[i].replace('_', '')
+        
+    print(file_name)
+    print(result_json)
+    
+    global shop_name
+    global price
+    global item_name
+    global item_link
+    global category
+    global img_src
+
+    shop_name = []
+    price = []
+    item_name = []
+    item_link = []
+    category = []
+
+    for name in file_name:
+      for i in range(len(data)):
+        if data.iloc[i][5] == name:
+          shop_name.append(data.iloc[i][0])
+          price.append(data.iloc[i][3])
+          item_name.append(data.iloc[i][2])
+          item_link.append(data.iloc[i][4])
+          category.append(data.iloc[i][1])
+          break
+      
+    img_src = ['shop_img/' + s for s in file_name]
+    
 
     
-    trans=result.round(2)*100
-    class_name=['바캉스','보헤미안','섹시','스포티','오피스룩','캐주얼','트레디셔널','페미닌','힙합']
-    global result_json
-    result_json=dict(zip(class_name,trans[0]))
