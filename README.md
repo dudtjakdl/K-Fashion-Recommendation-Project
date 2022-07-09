@@ -17,39 +17,53 @@ K-Fashion image를 학습한 모델을 구현하고 모델을 통하여 사용�
 
 ## 데이터셋
 
-1.K-Fashion 이미지 데이터
+1. [K-Fashion 이미지 원본 데이터](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=51)
 
-2.쇼핑몰관련 옷 이미지 데이터 & 정보 데이터
+2. [쇼핑몰관련 옷 이미지 원본 데이터](https://drive.google.com/drive/folders/1YfTl0YbWvXDz7OtltbwKVovpd2m-UJhH?usp=sharing)
+
+3. [쇼핑몰관련 옷 정보 데이터](https://drive.google.com/file/d/1HdHsg7P88ZZjLC1v2z-7wJoKs3_JeMXL/view?usp=sharing)
+
+4. [K-Fashion 학습 이미지 데이터](https://drive.google.com/drive/folders/1X1dPSJg3IeWAIZk1D6AsWhuuH7pXs8pE?usp=sharing)
+
 
 ## 사용 기술
 
 ### 데이터 수집 & 전처리
-1.웹 크롤링
 
+1. 웹 크롤링
+  - 17개의 쇼핑몰의 옷 데이터와 옷 정보를 크롤링 하여 이미지와 CSV 데이터 수집
+  - Selenium, BeautifulSoup 라이브러리 사용
 
-2.Human Segmentation
-
-
+2. Human Segmentation
+  - https://github.com/ternaus/people_segmentation
+  - 사전 학습된 오픈소스 모델을 적용하여 훈련 이미지 데이터에서 인물 이외의 픽셀 제거
+  
 ### 모델링
-1.Human Segmentation
+1. Data Augmentation
+  - Xception model layer가 시작되기 전에 augmentation layer를 추가시켜 데이터 증강 및 모델 성능 확보
+  
+2. Image Classification
+  - Xception 모델을 활용하여 9개의 라벨로 구성된 이미지 데이터셋을 모델에 학습
+ 
+3. Recommandation Algorithm
+  - VGG16 모델을 사용하여 마지막 FC1 dense layer에서 Feature Vector를 추출 후 인풋 데이터와 쇼핑몰 데이터의 Feature Vector의 유사도를 코사인유사도로 비교하여서 유사한 것을 추천
 
-2.Image Classification
 
-3.Recommandation Algorithm 
+![image](https://user-images.githubusercontent.com/38833676/178094136-acfaaddc-de52-4ce2-a6b3-1fc2d5ce965d.png)
 
 ### 웹
 
-1.프론트엔드
+1. 프론트엔드
 
-2.백엔드
+2. 백엔드
 
 ## 사용법
 
 1. 개발환경
 
-2.라이브러리
+2. 라이브러리
 
-3.실행 방법
+3. 실행 방법
 
 ## 시연 영상
 
