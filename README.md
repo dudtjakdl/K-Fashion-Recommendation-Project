@@ -54,16 +54,32 @@ K-Fashion image를 학습한 모델을 구현하고 모델을 통하여 사용�
 ### 웹
 
 1. 프론트엔드
+  - HTML, CSS , JavaScript, BootStrap
+
+  - 모델 및 데이터 처리를 웹에 동적으로 연동시키기 위해 파이썬 웹 프레임워크인 Flask 사용
 
 2. 백엔드
+  - 1. 클라이언트가 이미지 업로드
+  - 2. 이미지를 받아와 segmentation 적용 후 서버에 업로드 시간을 제목으로 이미지 저장
+  - 3. 분류 모델과 유사도 모델 적용
+  - 4. 크롤링 데이터 csv에서 유사도 모델 결과로 나온 파일 이름을 조회 후 정보 추출
+  - 5. Flask의 jinja2 템플릿을 이용하여 View 페이지인 result.html의 분석 결과를 동적으로 변환
 
 ## 사용법
 
 1. 개발환경
-
+  - Python 3.8.10
+  - Colab
+  - Tesorflow
+  - HTML, CSS , JavaScript, BootStrap, Flask
+  
 2. 라이브러리
 
+[requirements.txt](https://github.com/dudtjakdl/K-Fashion-Recommendation-Project/files/9075997/requirements.txt)
+
+
 3. 실행 방법
+
 
 ## 시연 영상
 
