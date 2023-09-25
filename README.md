@@ -91,7 +91,3 @@ K-Fashion image를 학습한 모델을 구현하고 모델을 통하여 사용�
 
 
 https://user-images.githubusercontent.com/38833676/178096021-959d819d-2206-4bb3-bfb3-23ba7f714789.mp4
-
-
-
-## 참조
