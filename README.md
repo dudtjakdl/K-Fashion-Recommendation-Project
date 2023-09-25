@@ -9,7 +9,7 @@ K-Fashion image를 학습한 모델을 구현하고 모델을 통하여 사용�
 * [김영서](https://github.com/dudtjakdl)
 * [송우진](https://github.com/woojinsong)
 * [안성재](https://github.com/sammy0329)
-* 정효준
+* [정효준](https://github.com/Junepp)
 
 ## 아키텍쳐
 
